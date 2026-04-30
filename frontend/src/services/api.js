@@ -1,8 +1,12 @@
 // frontend/src/services/api.js
 import axios from 'axios';
 
-// URL de base de ton API backend (FastAPI)
-const API_BASE = 'http://localhost:8000';
+/**
+ * CONFIGURATION DE L'URL DE BASE
+ * En production (Vercel), il utilisera la variable d'environnement VITE_API_URL.
+ * En développement local, il utilisera http://localhost:8000 par défaut.
+ */
+const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
 const api = axios.create({
   baseURL: API_BASE,
@@ -13,7 +17,13 @@ const api = axios.create({
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    console.error("Erreur API Nexalyze:", error.response?.data || error.message);
+    // Log plus détaillé pour t'aider à déboguer dans la console du navigateur
+    console.error("Erreur API Nexalyze:", {
+      message: error.message,
+      url: error.config?.url,
+      method: error.config?.method,
+      data: error.response?.data
+    });
     return Promise.reject(error);
   }
 );
