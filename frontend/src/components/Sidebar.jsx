@@ -10,8 +10,6 @@ const navItems = [
   { path: '/settings', icon: Settings, label: 'Paramètres' },
 ];
 
-export default function Sidebar() {
-  return (
     // Sidebar reçoit maintenant deux props : isOpen et onClose
 export default function Sidebar({ isOpen, onClose }) {
   return (
