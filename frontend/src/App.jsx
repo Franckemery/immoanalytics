@@ -5,8 +5,6 @@ import Dashboard from './pages/Dashboard';
 import Collecte from './pages/Collecte';
 import Explorateur from './pages/Explorateur';
 import Analyse from './pages/Analyse';
-
-// Ajoute cet import en haut
 import { useState } from 'react';
 
 // Remplace tout le return par :
@@ -25,25 +23,25 @@ export default function App() {
         )}
 
         <main className='flex-1 lg:ml-64 p-4 md:p-8 min-h-screen'>
-          {/* Bouton burger visible uniquement sur mobile */}
-          <button onClick={() => setSidebarOpen(true)}
-            className='lg:hidden mb-4 p-2 rounded-lg border border-dark-border
-                       text-text-muted hover:text-text-primary transition-all'>
-            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M3 6h14M3 12h14M3 18h14"/>
-            </svg>
-          </button>
+            {/* Bouton burger visible uniquement sur mobile */}
+            <button onClick={() => setSidebarOpen(true)}
+              className='lg:hidden mb-4 p-2 rounded-lg border border-dark-border
+                         text-text-muted hover:text-text-primary transition-all'>
+              <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M3 6h14M3 12h14M3 18h14"/>
+              </svg>
+            </button>
 
-          <div className='relative z-10'>
-            <Routes>
-              <Route path='/'         element={<Dashboard />} />
-              <Route path='/collecte' element={<Collecte />} />
-              <Route path='/explorer' element={<Explorateur />} />
-              <Route path='/analyse'  element={<Analyse />} />
-              <Route path='/settings' element={<div className='card'><h1 className='text-xl font-bold'>Paramètres</h1></div>} />
-            </Routes>
-          </div>
-        </main>
+            <div className='relative z-10'>
+              <Routes>
+                <Route path='/'         element={<Dashboard />} />
+                <Route path='/collecte' element={<Collecte />} />
+                <Route path='/explorer' element={<Explorateur />} />
+                <Route path='/analyse'  element={<Analyse />} />
+                <Route path='/settings' element={<div className='card'><h1 className='text-xl font-bold'>Paramètres</h1></div>} />
+              </Routes>
+            </div>
+          </main>
       </div>
     </BrowserRouter>
   );
