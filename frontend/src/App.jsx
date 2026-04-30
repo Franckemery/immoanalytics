@@ -6,27 +6,48 @@ import Collecte from './pages/Collecte';
 import Explorateur from './pages/Explorateur';
 import Analyse from './pages/Analyse';
 
+// Ajoute cet import en haut
+import { useState } from 'react';
+
+// Remplace tout le return par :
 export default function App() {
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+
   return (
     <BrowserRouter>
-      <div className='flex min-h-screen bg-dark-bg text-text-primary font-sans antialiased selection:bg-accent-blue/30'>
+      <div className='flex min-h-screen bg-dark-bg'>
+        <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
         
-        {/* Sidebar fixe à gauche */}
-        <Sidebar />
+        {/* Overlay sombre quand sidebar ouverte sur mobile */}
+        {sidebarOpen && (
+          <div className='fixed inset-0 bg-black/50 z-40 lg:hidden'
+               onClick={() => setSidebarOpen(false)} />
+        )}
 
-        {/* Contenu principal */}
-        <main className='ml-64 flex-1 relative min-h-screen overflow-x-hidden'>
-          
-          {/* Background FX: Dégradés radiaux pour l'esthétique "sombre et vivante" */}
-          <div className='fixed inset-0 pointer-events-none z-0'
-            style={{
-              background: `
-                radial-gradient(circle at 15% 50%, rgba(59, 130, 246, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 85% 15%, rgba(139, 92, 246, 0.08) 0%, transparent 40%),
-                radial-gradient(circle at 50% 90%, rgba(63, 185, 80, 0.05) 0%, transparent 40%)
-              `,
-            }} 
-          />
+        <main className='flex-1 lg:ml-64 p-4 md:p-8 min-h-screen'>
+          {/* Bouton burger visible uniquement sur mobile */}
+          <button onClick={() => setSidebarOpen(true)}
+            className='lg:hidden mb-4 p-2 rounded-lg border border-dark-border
+                       text-text-muted hover:text-text-primary transition-all'>
+            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M3 6h14M3 12h14M3 18h14"/>
+            </svg>
+          </button>
+
+          <div className='relative z-10'>
+            <Routes>
+              <Route path='/'         element={<Dashboard />} />
+              <Route path='/collecte' element={<Collecte />} />
+              <Route path='/explorer' element={<Explorateur />} />
+              <Route path='/analyse'  element={<Analyse />} />
+              <Route path='/settings' element={<div className='card'><h1 className='text-xl font-bold'>Paramètres</h1></div>} />
+            </Routes>
+          </div>
+        </main>
+      </div>
+    </BrowserRouter>
+  );
+}
 
           {/* Wrapper de contenu avec padding */}
           <div className='relative z-10 p-6 lg:p-10 max-w-[1400px] mx-auto'>
