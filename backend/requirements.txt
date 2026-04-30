@@ -1,0 +1,10 @@
+fastapi==0.111.0               # Le framework web API
+uvicorn[standard]==0.29.0      # Serveur web ASGI (pour lancer FastAPI)
+sqlalchemy==2.0.30             # ORM pour communiquer avec PostgreSQL
+psycopg2-binary==2.9.9         # Driver PostgreSQL pour Python
+python-dotenv==1.0.1           # Pour lire les variables d'environnement (.env)
+pydantic==2.7.1                # Validation des données
+numpy==1.26.4                  # Calculs mathématiques
+scikit-learn==1.4.2            # Régression linéaire
+pandas==2.2.2                  # Manipulation des données
+scipy==1.13.0                  # Statistiques avancées

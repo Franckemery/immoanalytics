@@ -1,0 +1,15 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fond sombre arrondi -->
+  <rect width="32" height="32" rx="8" fill="#0D1117"/>
+  
+  <!-- Forme principale (Accent Blue) -->
+  <path d="M9 23V9L15 16L21 9V23" stroke="#58A6FF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Point d'analyse (Accent Violet) -->
+  <circle cx="23" cy="23" r="3" fill="#8957E5">
+    <animate attributeName="opacity" values="1;0.5;1" dur="3s" repeatCount="indefinite" />
+  </circle>
+  
+  <!-- Ligne de tendance (Accent Green) -->
+  <path d="M9 25C13 21 18 24 23 18" stroke="#3FB950" stroke-width="1.5" stroke-linecap="round" opacity="0.8"/>
+</svg>
