@@ -12,17 +12,29 @@ const navItems = [
 
 export default function Sidebar() {
   return (
-    <aside className='fixed left-0 top-0 h-screen w-64 bg-dark-card border-r border-dark-border flex flex-col z-50'>
-      {/* Logo */}
-      <div className='p-6 border-b border-dark-border'>
-        <h1 className='text-xl font-bold tracking-tight'>
-          <span className='text-accent-blue'>Immo</span>
-          <span className='text-accent-violet'>Analytics</span>
-        </h1>
-        <p className='text-text-muted text-[10px] uppercase tracking-widest mt-1'>
-          Analyse prédictive
-        </p>
+    // Sidebar reçoit maintenant deux props : isOpen et onClose
+export default function Sidebar({ isOpen, onClose }) {
+  return (
+    <aside className={`fixed left-0 top-0 h-screen w-64 bg-dark-card
+                      border-r border-dark-border flex flex-col z-50
+                      transition-transform duration-300
+                      ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+                      lg:translate-x-0`}>
+      {/* Logo — ajoute un bouton fermer sur mobile */}
+      <div className='p-6 border-b border-dark-border flex items-center justify-between'>
+        <div>
+          <h1 className='text-xl font-bold'>
+            <span className='text-accent-blue'>Immo</span>
+            <span className='text-accent-violet'>Analytics</span>
+          </h1>
+          <p className='text-text-muted text-xs mt-1'>Analyse prédictive</p>
+        </div>
+        <button onClick={onClose}
+          className='lg:hidden text-text-muted hover:text-text-primary'>
+          ✕
+        </button>
       </div>
+      {/* ... le reste de ton code Sidebar ne change pas ... */}
 
       {/* Navigation */}
       <nav className='flex-1 p-4 space-y-2 mt-4'>
