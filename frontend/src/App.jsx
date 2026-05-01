@@ -5,6 +5,7 @@ import Dashboard from './pages/Dashboard';
 import Collecte from './pages/Collecte';
 import Explorateur from './pages/Explorateur';
 import Analyse from './pages/Analyse';
+import Aide from './pages/Aide';
 import { useState } from 'react';
 
 export default function App() {
