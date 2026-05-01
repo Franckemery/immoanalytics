@@ -78,6 +78,9 @@ export default function Sidebar({ isOpen, onClose }) {
               <p className='text-text-muted text-[10px] text-center'>
                 © 2026 Nexalyze Engine
               </p>
+              <p className='text-text-muted text-[10px] text-center'>
+                Developpeur: Franck Emery
+              </p>
             </div>
           </div>
       </aside>
