@@ -23,7 +23,7 @@ export default function Explorateur() {
   useEffect(() => { load(); }, []);
 
   const handleDelete = async (id) => {
-    if (!confirm('Supprimer définitivement ce bien de la base Nexalyze ?')) return;
+    if (!confirm('Supprimer définitivement ce bien de la base ImmoAnalytics ?')) return;
     
     setDeletingId(id);
     try {
