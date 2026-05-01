@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import { Building2, TrendingUp, BarChart3, DollarSign } from 'lucide-react';
 import { 
-  ScatterChart, Scatter, XAxis, YAxis, Tooltip, 
+  Scatter, XAxis, YAxis, Tooltip, 
   ResponsiveContainer, ComposedChart, Line, Cell 
 } from 'recharts';
 import StatCard from '../components/StatCard';
@@ -81,8 +81,8 @@ export default function Dashboard() {
         <p className='text-text-muted text-sm mt-1'>Intelligence du marché immobilier local [Cameroun]</p>
       </div>
 
-      {/* Cartes Statistiques */}
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4'>
+      {/* Cartes Statistiques - MODIFIÉ : grid-cols-2 pour mobile */}
+      <div className='grid grid-cols-2 lg:grid-cols-4 gap-3 md:gap-4'>
         <StatCard 
           title='Biens Total' 
           value={stats?.total ?? 0} 
@@ -120,8 +120,9 @@ export default function Dashboard() {
           <p className='text-text-muted text-xs uppercase tracking-widest'>Moteur de régression linéaire Nexalyze</p>
         </div>
 
-        <div className='h-[400px] w-full'>
-          <ResponsiveContainer>
+        <div className='w-full overflow-hidden'>
+          {/* MODIFIÉ : Hauteur adaptative selon la largeur de l'écran */}
+          <ResponsiveContainer width="100%" height={window.innerWidth < 640 ? 250 : 400}>
             <ComposedChart margin={{ top: 10, right: 30, bottom: 20, left: 20 }}>
               <XAxis 
                 dataKey='x' 
@@ -143,14 +144,12 @@ export default function Dashboard() {
               />
               <Tooltip content={<CustomTooltip />} />
               
-              {/* Points de données (Scatter) */}
               <Scatter data={scatterData} name="Biens">
                 {scatterData.map((entry, index) => (
                   <Cell key={`cell-${index}`} fill='#3B82F6' fillOpacity={0.6} stroke="#3B82F6" strokeWidth={1} />
                 ))}
               </Scatter>
 
-              {/* Ligne de régression (Line) */}
               {regrLine.length === 2 && (
                 <Line
                   data={regrLine}
