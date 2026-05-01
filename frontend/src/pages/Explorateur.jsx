@@ -12,7 +12,6 @@ export default function Explorateur() {
     setLoading(true);
     try {
       const res = await getProperties();
-      // On s'assure de trier par les plus récents (si ton API renvoie des dates)
       setProperties(res.data);
     } catch (err) {
       console.error("Erreur lors du chargement des données", err);
@@ -29,7 +28,6 @@ export default function Explorateur() {
     setDeletingId(id);
     try {
       await deleteProperty(id);
-      // Mise à jour optimiste de l'UI pour plus de fluidité
       setProperties(prev => prev.filter(p => p.id !== id));
     } catch (err) {
       alert("Erreur lors de la suppression.");
@@ -60,13 +58,14 @@ export default function Explorateur() {
         </button>
       </div>
 
-      <div className='card overflow-hidden p-0 border-dark-border'>
-        <div className='overflow-x-auto text-left'>
+      {/* MODIFIÉ : Adaptabilité mobile (full-width sur petits écrans, arrondi sur desktop) */}
+      <div className='card overflow-hidden p-0 -mx-4 md:mx-0 rounded-none md:rounded-xl border-dark-border'>
+        <div className='overflow-x-auto min-w-0'>
           <table className='w-full text-sm border-collapse'>
             <thead>
               <tr className='bg-dark-bg/80 border-b border-dark-border'>
                 {['Désignation', 'Catégorie', 'Surface', 'Pièces', 'Prestige', 'Prix (FCFA)', 'Actions'].map((h) => (
-                  <th key={h} className='px-6 py-4 text-text-muted font-bold text-[10px] uppercase tracking-widest'>
+                  <th key={h} className='px-6 py-4 text-text-muted font-bold text-[10px] uppercase tracking-widest text-left'>
                     {h}
                   </th>
                 ))}
@@ -95,7 +94,7 @@ export default function Explorateur() {
               ) : (
                 properties.map((p) => (
                   <tr key={p.id} className='group hover:bg-accent-blue/[0.02] transition-colors'>
-                    <td className='px-6 py-4 font-semibold text-text-primary'>
+                    <td className='px-6 py-4 font-semibold text-text-primary whitespace-nowrap'>
                       {p.property_name}
                     </td>
                     <td className='px-6 py-4'>
@@ -103,7 +102,7 @@ export default function Explorateur() {
                         {p.property_type}
                       </span>
                     </td>
-                    <td className='px-6 py-4 font-mono text-accent-blue'>
+                    <td className='px-6 py-4 font-mono text-accent-blue whitespace-nowrap'>
                       {p.surface_m2} <span className="text-[10px] text-text-muted">m²</span>
                     </td>
                     <td className='px-6 py-4 text-text-muted font-medium'>
@@ -120,7 +119,7 @@ export default function Explorateur() {
                         ))}
                       </div>
                     </td>
-                    <td className='px-6 py-4'>
+                    <td className='px-6 py-4 whitespace-nowrap'>
                       <div className="flex flex-col">
                         <span className="font-mono text-accent-green font-bold text-base">
                           {(p.price / 1000000).toFixed(2)}M
