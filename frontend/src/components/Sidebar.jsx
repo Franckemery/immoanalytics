@@ -1,73 +1,84 @@
 // frontend/src/components/Sidebar.jsx
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Plus, Table, Brain, Settings, HelpCircle } from 'lucide-react';
+import { LayoutDashboard, Plus, Table, Brain, Settings, HelpCircle, X } from 'lucide-react';
 
 const navItems = [
   { path: '/', icon: LayoutDashboard, label: 'Tableau de Bord' },
   { path: '/collecte', icon: Plus, label: 'Collecte' },
   { path: '/explorer', icon: Table, label: 'Explorateur' },
   { path: '/analyse', icon: Brain, label: 'Analyse IA' },
-  { path: '/aide',     icon: HelpCircle,      label: 'Aide' },
+  { path: '/aide',     icon: HelpCircle,  label: 'Aide' },
   { path: '/settings', icon: Settings, label: 'Paramètres' },
 ];
 
-    // Sidebar reçoit maintenant deux props : isOpen et onClose
 export default function Sidebar({ isOpen, onClose }) {
   return (
-    <aside className={`fixed left-0 top-0 h-screen w-64 bg-dark-card
-                      border-r border-dark-border flex flex-col z-50
-                      transition-transform duration-300
-                      ${isOpen ? 'translate-x-0' : '-translate-x-full'}
-                      lg:translate-x-0`}>
-      {/* Logo — ajoute un bouton fermer sur mobile */}
-      <div className='p-6 border-b border-dark-border flex items-center justify-between'>
-        <div>
-          <h1 className='text-xl font-bold'>
-            <span className='text-accent-blue'>Immo</span>
-            <span className='text-accent-violet'>Analytics</span>
-          </h1>
-          <p className='text-text-muted text-xs mt-1'>Analyse prédictive</p>
-        </div>
-        <button onClick={onClose}
-          className='lg:hidden text-text-muted hover:text-text-primary'>
-          ✕
-        </button>
-      </div>
-      {/* ... le reste de ton code Sidebar ne change pas ... */}
+    <>
+      {/* Overlay pour mobile : ferme la sidebar quand on clique en dehors */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 lg:hidden transition-opacity"
+          onClick={onClose}
+        />
+      )}
 
-      {/* Navigation */}
-      <nav className='flex-1 p-4 space-y-2 mt-4'>
-        {navItems.map(({ path, icon: Icon, label }) => (
-          <NavLink
-            key={path}
-            to={path}
-            end={path === '/'}
-            onClick={onClose}
-            className={({ isActive }) =>
-              `flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 group
-              ${isActive
-                ? 'bg-accent-blue/10 text-accent-blue border border-accent-blue/20'
-                : 'text-text-muted hover:text-text-primary hover:bg-dark-bg'
-              }`
-            }
-          >
-            <Icon 
-              size={20} 
-              className='transition-transform duration-200 group-hover:scale-110' 
-            />
-            <span className='text-sm font-medium'>{label}</span>
-          </NavLink>
-        ))}
-      </nav>
-
-      {/* Footer */}
-      <div className='p-4 border-t border-dark-border'>
-        <div className='bg-dark-bg/50 rounded-lg p-3'>
-          <p className='text-text-muted text-[10px] text-center'>
-            © 2026 Nexalyze Engine
-          </p>
+      <aside className={`fixed left-0 top-0 h-screen w-64 bg-dark-card
+                        border-r border-dark-border flex flex-col z-50
+                        transition-transform duration-300 ease-in-out
+                        ${isOpen ? 'translate-x-0' : '-translate-x-full'}
+                        lg:translate-x-0`}>
+        
+        {/* Logo — Mis à jour avec le nom Nexalyze */}
+        <div className='p-6 border-b border-dark-border flex items-center justify-between'>
+          <div>
+            <h1 className='text-xl font-bold tracking-tight'>
+              <span className='text-accent-blue'>Nexa</span>
+              <span className='text-text-primary'>lyze</span>
+            </h1>
+            <p className='text-text-muted text-[10px] uppercase tracking-widest mt-1'>Intelligence Immo</p>
+          </div>
+          
+          {/* Bouton fermer optimisé pour mobile */}
+          <button onClick={onClose}
+            className='lg:hidden p-2 rounded-lg hover:bg-dark-bg text-text-muted transition-colors'>
+            <X size={20} />
+          </button>
         </div>
-      </div>
-    </aside>
+
+        {/* Navigation */}
+        <nav className='flex-1 p-4 space-y-1.5 mt-4 overflow-y-auto'>
+          {navItems.map(({ path, icon: Icon, label }) => (
+            <NavLink
+              key={path}
+              to={path}
+              end={path === '/'}
+              onClick={onClose} // Ferme automatiquement la sidebar après un clic sur mobile
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group
+                ${isActive
+                  ? 'bg-accent-blue/10 text-accent-blue border border-accent-blue/20'
+                  : 'text-text-muted hover:text-text-primary hover:bg-dark-bg border border-transparent'
+                }`
+              }
+            >
+              <Icon 
+                size={20} 
+                className='transition-transform duration-200 group-hover:scale-110' 
+              />
+              <span className='text-sm font-semibold'>{label}</span>
+            </NavLink>
+          ))}
+        </nav>
+
+        {/* Footer avec versioning */}
+        <div className='p-4 border-t border-dark-border bg-dark-card/50'>
+          <div className='bg-dark-bg/40 border border-dark-border/50 rounded-xl p-3'>
+            <p className='text-text-muted text-[9px] text-center uppercase tracking-tighter'>
+              © 2026 Nexalyze Engine v1.0.4
+            </p>
+          </div>
+        </div>
+      </aside>
+    </>
   );
 }
