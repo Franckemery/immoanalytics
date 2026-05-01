@@ -47,6 +47,7 @@ export default function App() {
               <Route path='/collecte' element={<Collecte />} />
               <Route path='/explorer' element={<Explorateur />} />
               <Route path='/analyse' element={<Analyse />} />
+              <Route path='/aide' element={<Aide />} />
               
               {/* Route Paramètres stylisée */}
               <Route path='/settings' element={
