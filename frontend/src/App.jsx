@@ -36,7 +36,7 @@ export default function App() {
                 <path d="M3 6h18M3 12h18M3 18h18"/>
               </svg>
             </button>
-            <span className='ml-4 font-bold text-accent-blue'>Nexalyze</span>
+            <span className='ml-4 font-bold text-accent-blue'>ImmoAnalytics</span>
           </header>
 
           {/* Contenu principal avec padding et largeur max */}
