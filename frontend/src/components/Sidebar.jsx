@@ -73,13 +73,13 @@ export default function Sidebar({ isOpen, onClose }) {
         </nav>
 
         {/* Footer avec versioning */}
-        <div className='p-4 border-t border-dark-border bg-dark-card/50'>
-          <div className='bg-dark-bg/40 border border-dark-border/50 rounded-xl p-3'>
-            <p className='text-text-muted text-[9px] text-center uppercase tracking-tighter'>
-              © 2026 Nexalyze Engine v1.0.4
-            </p>
+         <div className='p-4 border-t border-dark-border'>
+            <div className='bg-dark-bg/50 rounded-lg p-3'>
+              <p className='text-text-muted text-[10px] text-center'>
+                © 2026 Nexalyze Engine
+              </p>
+            </div>
           </div>
-        </div>
       </aside>
     </>
   );
