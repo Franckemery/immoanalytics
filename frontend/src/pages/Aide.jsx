@@ -1,7 +1,5 @@
 // frontend/src/pages/Aide.jsx
 import { useState } from 'react';
-// Import des icônes si tu décides d'en utiliser plus tard au lieu des emojis
-// import { Brain, Map, Database, LayoutDashboard, HelpCircle, Activity } from 'lucide-react';
 
 const sections = [
   { id: 'overview', label: '🗺 Vue d\'ensemble',    color: 'blue'   },
@@ -19,8 +17,6 @@ const colors = {
   yellow: 'border-accent-yellow/30 text-accent-yellow bg-accent-yellow/10',
 };
 
-// --- COMPOSANTS INTERNES ---
-
 function InfoBox({ type = 'tip', title, children }) {
   const styles = {
     tip:    'border-accent-blue/25   bg-accent-blue/5   text-accent-blue',
@@ -34,7 +30,7 @@ function InfoBox({ type = 'tip', title, children }) {
       <span className='text-lg flex-shrink-0'>{icons[type]}</span>
       <div>
         <p className='font-semibold text-sm mb-1'>{title}</p>
-        <div className='text-text-muted text-sm leading-relaxed'>{children}</div>
+        <p className='text-text-muted text-sm leading-relaxed'>{children}</p>
       </div>
     </div>
   );
@@ -65,7 +61,7 @@ function Step({ num, title, children }) {
       </div>
       <div className='pb-2'>
         <h4 className='font-semibold text-text-primary mb-1'>{title}</h4>
-        <div className='text-text-muted text-sm leading-relaxed'>{children}</div>
+        <p className='text-text-muted text-sm leading-relaxed'>{children}</p>
       </div>
     </div>
   );
@@ -86,7 +82,8 @@ function StatCard({ title, value, desc, color }) {
   };
   return (
     <div className='card relative overflow-hidden'>
-      <div className={`absolute top-0 left-0 right-0 h-0.5 ${top[color]}`} />
+      <div className={`absolute top-0 left-0 right-0 h-0.5 ${top[color]}`}
+           style={{ boxShadow: `0 0 8px currentColor` }} />
       <p className='text-text-muted text-xs font-medium uppercase tracking-wider mb-2'>{title}</p>
       <p className={`text-3xl font-bold ${val[color]} mb-1`}>{value}</p>
       <p className='text-text-muted text-xs'>{desc}</p>
@@ -94,28 +91,143 @@ function StatCard({ title, value, desc, color }) {
   );
 }
 
-// --- SECTIONS DE CONTENU ---
+// ── CONTENU DE CHAQUE SECTION ─────────────────────────────────────────────────
 
 function Overview() {
   return (
-    <div className="animate-in fade-in duration-500">
-      <SectionTitle num='1' title='Vue d’ensemble' subtitle='Structure de Nexalyze' color='blue' />
+    <div>
+      <SectionTitle num='1' title="Vue d'ensemble" subtitle='Les 5 pages et leur rôle' color='blue' />
       <p className='text-text-muted mb-6 leading-relaxed'>
-        Nexalyze est conçu pour simplifier l'analyse immobilière. Chaque page correspond à une étape de ton workflow.
+        <strong className='text-text-primary'>ImmoAnalytics</strong> est divisée en <strong className='text-text-primary'>5 pages</strong> accessibles
+        via la barre latérale gauche. Chaque page a un rôle précis dans le cycle d'analyse.
       </p>
       <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 mb-6'>
         {[
-          { icon: '📊', title: 'Tableau de Bord', desc: 'Visualisation globale et indicateurs de performance.' },
-          { icon: '📝', title: 'Collecte',         desc: 'Saisie structurée des caractéristiques des biens.' },
-          { icon: '🗃',  title: 'Explorateur',      desc: 'Gestion complète de ta base de données.' },
-          { icon: '🧠', title: 'Analyse IA',       desc: 'Modèle de régression et simulateur de prix.' },
-          { icon: '⚙️', title: 'Paramètres',       desc: 'Personnalisation de l’expérience.' },
-          { icon: '❓', title: 'Aide',               desc: 'Documentation technique de l’outil.' },
+          { icon: '📊', title: 'Tableau de Bord', desc: 'Vue globale, graphiques et indicateurs clés' },
+          { icon: '📝', title: 'Collecte',         desc: 'Saisir un nouveau bien immobilier' },
+          { icon: '🗃',  title: 'Explorateur',      desc: 'Consulter, modifier et supprimer les données' },
+          { icon: '🧠', title: 'Analyse IA',       desc: 'Régression linéaire et prédictions de prix' },
+          { icon: '⚙️', title: 'Paramètres',       desc: 'Configuration de l\'application' },
+          { icon: '❓', title: 'Aide',               desc: 'Ce guide que tu es en train de lire' },
         ].map(({ icon, title, desc }) => (
-          <div key={title} className='card hover:border-accent-blue/40 transition-all cursor-pointer'>
+          <div key={title} className='card hover:border-accent-blue/40 transition-all duration-200'>
             <span className='text-2xl mb-3 block'>{icon}</span>
             <h4 className='font-semibold text-text-primary text-sm mb-1'>{title}</h4>
             <p className='text-text-muted text-xs leading-relaxed'>{desc}</p>
+          </div>
+        ))}
+      </div>
+      <InfoBox type='tip' title='Par où commencer ?'>
+        Si tu utilises l'app pour la première fois, commence par la page <strong>Collecte</strong> pour
+        ajouter des biens. Le Tableau de Bord et l'Analyse IA s'enrichissent automatiquement à chaque
+        nouveau bien. Il faut au minimum <strong>5 biens</strong> pour activer les prédictions.
+      </InfoBox>
+    </div>
+  );
+}
+
+function Collecte() {
+  return (
+    <div>
+      <SectionTitle num='2' title='Saisir des données' subtitle='Le formulaire en 3 étapes' color='violet' />
+      <p className='text-text-muted mb-6 leading-relaxed'>
+        La page Collecte utilise un formulaire guidé en <strong className='text-text-primary'>3 étapes</strong>.
+        Une barre de progression lumineuse en haut indique où tu en es.
+      </p>
+      <Step num='1' title='Identité & Emplacement'>
+        Donne un nom au bien (ex: "Villa Bastos 3"), choisis son type, le quartier, la distance au
+        centre-ville en km et évalue le prestige du quartier de 1 à 10 avec le curseur lumineux.
+      </Step>
+      <Step num='2' title='Caractéristiques Physiques'>
+        Renseigne la surface en m² (obligatoire — c'est la variable la plus importante), le nombre
+        de pièces, chambres, salles de bain, l'étage et l'âge du bâtiment. Active les équipements
+        présents (Jardin 🌿, Piscine 🏊, Garage 🚗…) — ils s'illuminent en bleu quand activés.
+      </Step>
+      <Step num='3' title='Valeur Marchande'>
+        Saisis le prix de vente en FCFA. C'est cette donnée qui entraîne le modèle — plus tu ajoutes
+        de biens avec leur prix réel, plus les prédictions futures seront précises.
+      </Step>
+      <InfoBox type='warn' title='Champs obligatoires'>
+        Le <strong>nom du bien</strong>, la <strong>surface en m²</strong> et le <strong>prix de vente</strong> sont
+        obligatoires. Sans eux, l'enregistrement sera refusé.
+      </InfoBox>
+    </div>
+  );
+}
+
+function Dashboard() {
+  return (
+    <div>
+      <SectionTitle num='3' title='Tableau de Bord' subtitle='Lire les 4 indicateurs clés' color='green' />
+      <div className='grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6'>
+        <StatCard title='Biens Total'    value='24'     desc='Biens dans la base'           color='blue'   />
+        <StatCard title='Prix Moyen'     value='87.3M'  desc='En FCFA'                      color='green'  />
+        <StatCard title='Prix/m² Moyen'  value='412k'   desc='FCFA par m²'                  color='violet' />
+        <StatCard title='Coefficient R²' value='78.4%'  desc='Fiabilité du modèle'          color='yellow' />
+      </div>
+      <InfoBox type='tip' title='Comment interpréter le Prix/m² ?'>
+        C'est l'indicateur le plus utile pour <strong>comparer des biens de tailles différentes</strong>.
+      </InfoBox>
+    </div>
+  );
+}
+
+function Analyse() {
+  return (
+    <div>
+      <SectionTitle num='4' title='Analyse IA' subtitle='Prédictions & Simulateur de prix' color='yellow' />
+      <h3 className='font-semibold text-text-primary mb-3'>Le panneau Régression Multiple</h3>
+      <p className='text-text-muted mb-4 text-sm leading-relaxed'>
+        Ce panneau affiche <strong className='text-text-primary'>l'influence de chaque variable sur le prix</strong> de vos biens dans <strong>ImmoAnalytics</strong>.
+      </p>
+      <div className='card mb-6 overflow-x-auto'>
+        <table className='w-full text-sm text-left'>
+          <thead>
+            <tr className='border-b border-dark-border'>
+              <th className='pb-3 text-text-muted font-medium text-xs uppercase pr-4'>Variable</th>
+              <th className='pb-3 text-text-muted font-medium text-xs uppercase pr-4'>Coefficient</th>
+              <th className='pb-3 text-text-muted font-medium text-xs uppercase'>Interprétation</th>
+            </tr>
+          </thead>
+          <tbody>
+             <tr className='border-b border-dark-border/40'>
+                <td className='py-3 pr-4 font-medium text-text-primary text-xs'>Surface m²</td>
+                <td className='py-3 pr-4'><span className="bg-accent-green/15 text-accent-green px-2 py-0.5 rounded-full">+450k</span></td>
+                <td className='py-3 text-text-muted text-xs'>Chaque m² ajoute 450k FCFA</td>
+             </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function Stats() {
+  return (
+    <div>
+      <SectionTitle num='5' title='Comprendre les Statistiques' subtitle='R², régression, coefficients' color='blue' />
+      <div className='bg-dark-bg border border-accent-violet/30 rounded-xl p-5 text-center mb-6'>
+        <p className='font-mono text-accent-violet text-lg'>
+          Prix = β₀ + (β₁ × Surface) + (β₂ × Pièces) ...
+        </p>
+      </div>
+    </div>
+  );
+}
+
+function FAQ() {
+  const [open, setOpen] = useState(null);
+  const items = [
+    { q: 'La prédiction affiche "Pas assez de données"', a: 'Il faut au minimum 5 biens dans la base pour activer les prédictions dans ImmoAnalytics.' },
+  ];
+  return (
+    <div>
+      <SectionTitle num='6' title='Questions Fréquentes' subtitle='Solutions rapides' color='violet' />
+      <div className='space-y-3'>
+        {items.map(({ q, a }, i) => (
+          <div key={i} className='card cursor-pointer' onClick={() => setOpen(open === i ? null : i)}>
+            <p className='font-semibold text-text-primary text-sm'>{q}</p>
+            {open === i && <p className='text-text-muted text-sm mt-3 pt-3 border-t border-dark-border'>{a}</p>}
           </div>
         ))}
       </div>
@@ -123,82 +235,36 @@ function Overview() {
   );
 }
 
-// Les fonctions Collecte, Dashboard, Analyse, Stats, FAQ restent structurellement les mêmes que ton code initial 
-// mais j'ai corrigé l'erreur "Brain" dans Analyse.
-
-function Analyse() {
-  return (
-    <div className="animate-in fade-in duration-500">
-      <SectionTitle num='4' title='Analyse IA' subtitle='Comprendre les prédictions' color='yellow' />
-      <h3 className='font-semibold text-text-primary mb-3'>La Régression Multiple</h3>
-      {/* Correction ici : suppression de la référence à Brain non importé */}
-      <p className='text-text-muted mb-4 text-sm leading-relaxed'>
-        Nexalyze utilise un algorithme de <strong>Régression Linéaire Multiple</strong> pour estimer la valeur des biens en fonction de plusieurs variables simultanées.
-      </p>
-      <div className='card mb-6 overflow-x-auto'>
-         {/* ... (Tableau des coefficients identique à ton code) */}
-      </div>
-    </div>
-  );
-}
-
-// ... Les autres sections (Collecte, Stats, FAQ) doivent être incluses ici ...
-
-// --- COMPOSANT PRINCIPAL ---
+// ── COMPOSANT PRINCIPAL ───────────────────────────────────────────────────────
 
 const sectionComponents = { 
   overview: Overview, 
-  collecte: () => <div className="p-4">Contenu Collecte...</div>, // À remplacer par tes fonctions
-  dashboard: () => <div className="p-4">Contenu Dashboard...</div>, 
+  collecte: Collecte, 
+  dashboard: Dashboard, 
   analyse: Analyse, 
-  stats: () => <div className="p-4">Contenu Stats...</div>, 
-  faq: () => <div className="p-4">Contenu FAQ...</div> 
+  stats: Stats, 
+  faq: FAQ 
 };
 
 export default function Aide() {
   const [active, setActive] = useState('overview');
-  const ActiveSection = sectionComponents[active] || Overview;
+  const ActiveSection = sectionComponents[active];
 
   return (
-    <div className='flex flex-col lg:flex-row gap-6 max-w-6xl mx-auto'>
-      {/* Sommaire latéral */}
-      <aside className='hidden lg:flex flex-col gap-1 w-64 flex-shrink-0'>
-        <p className='text-text-muted text-xs font-medium uppercase tracking-wider px-3 mb-2'>
-          Documentation
-        </p>
+    <div className='flex flex-col lg:flex-row gap-6 max-w-6xl'>
+      <aside className='hidden lg:flex flex-col gap-1 w-56 flex-shrink-0'>
+        <p className='text-text-muted text-xs font-medium uppercase px-3 mb-2'>Sommaire</p>
         {sections.map(({ id, label, color }) => (
-          <button 
-            key={id} 
-            onClick={() => setActive(id)}
-            className={`text-left px-4 py-3 rounded-xl text-sm transition-all duration-200 border
-              ${active === id 
-                ? `${colors[color]} font-bold shadow-lg shadow-accent-blue/5` 
-                : 'border-transparent text-text-muted hover:text-text-primary hover:bg-dark-card'}`}
-          >
+          <button key={id} onClick={() => setActive(id)}
+            className={`text-left px-3 py-2.5 rounded-lg text-sm transition-all
+              ${active === id ? `${colors[color]} border font-medium` : 'text-text-muted hover:bg-dark-card'}`}>
             {label}
           </button>
         ))}
       </aside>
 
-      {/* Menu mobile */}
-      <div className='lg:hidden flex gap-2 overflow-x-auto pb-2 no-scrollbar'>
-        {sections.map(({ id, label }) => (
-          <button 
-            key={id} 
-            onClick={() => setActive(id)}
-            className={`px-4 py-2 rounded-full text-xs font-bold whitespace-nowrap transition-all border
-              ${active === id 
-                ? 'bg-accent-blue text-white border-accent-blue' 
-                : 'bg-dark-card border-dark-border text-text-muted'}`}
-          >
-            {label}
-          </button>
-        ))}
-      </div>
-
-      {/* Contenu principal */}
       <div className='flex-1 min-w-0'>
-        <div className='card min-h-[500px] border-dark-border/50 bg-dark-card/30 backdrop-blur-sm'>
+        <div className='card'>
           <ActiveSection />
         </div>
       </div>
