@@ -1,12 +1,13 @@
 // frontend/src/components/Sidebar.jsx
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Plus, Table, Brain, Settings } from 'lucide-react';
+import { LayoutDashboard, Plus, Table, Brain, Settings, HelpCircle } from 'lucide-react';
 
 const navItems = [
   { path: '/', icon: LayoutDashboard, label: 'Tableau de Bord' },
   { path: '/collecte', icon: Plus, label: 'Collecte' },
   { path: '/explorer', icon: Table, label: 'Explorateur' },
   { path: '/analyse', icon: Brain, label: 'Analyse IA' },
+  { path: '/aide',     icon: HelpCircle,      label: 'Aide' },
   { path: '/settings', icon: Settings, label: 'Paramètres' },
 ];
 
