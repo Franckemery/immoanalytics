@@ -32,10 +32,12 @@ export default function Sidebar({ isOpen, onClose }) {
         <div className='p-6 border-b border-dark-border flex items-center justify-between'>
           <div>
             <h1 className='text-xl font-bold tracking-tight'>
-              <span className='text-accent-blue'>Nexa</span>
-              <span className='text-text-primary'>lyze</span>
+              <span className='text-accent-blue'>Immo</span>
+              <span className='text-accent-violet'>Analytics</span>
             </h1>
-            <p className='text-text-muted text-[10px] uppercase tracking-widest mt-1'>Intelligence Immo</p>
+            <p className='text-text-muted text-[10px] uppercase tracking-widest mt-1'>
+              Analyse prédictive
+            </p>
           </div>
           
           {/* Bouton fermer optimisé pour mobile */}
