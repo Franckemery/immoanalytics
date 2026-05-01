@@ -67,7 +67,8 @@ export default function Analyse() {
         <p className='text-text-muted text-sm mt-1'>Régression multiple et estimation en temps réel</p>
       </div>
 
-      <div className='grid grid-cols-1 xl:grid-cols-2 gap-6'>
+      {/* MODIFIÉ : Grille avec gap adaptatif */}
+      <div className='grid grid-cols-1 xl:grid-cols-2 gap-4 md:gap-6'>
         
         {/* SECTION 1: POIDS DES VARIABLES */}
         <div className='card space-y-6'>
